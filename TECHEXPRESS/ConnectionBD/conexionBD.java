@@ -9,9 +9,9 @@ import java.sql.Statement;
 public class conexionBD {
 
     public static void main(String[] args) {
-        String url = "jdbc:oracle:thin:@//192.168.100.82:1521/orcl";
-        String user = "RH";
-        String password = "12345";
+        String url = "jdbc:oracle:thin:@//192.168.100.82:1521/orclpdb";
+        String user = "remoteUser";
+        String password = "DBFide1";
 
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
