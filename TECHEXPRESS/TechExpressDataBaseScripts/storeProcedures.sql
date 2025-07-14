@@ -121,7 +121,6 @@ BEGIN
     WHERE Cliente_ID = pClienteID;
 END;
 
-
 --EliminarInventario
 CREATE OR REPLACE PROCEDURE EliminarInventario(pItemID NUMBER) AS
 BEGIN
@@ -134,4 +133,74 @@ CREATE OR REPLACE PROCEDURE EliminarCliente(pClienteID NUMBER) AS
 BEGIN
     DELETE FROM Clientes
     WHERE Cliente_ID = pClienteID;
+END;
+
+----------------------------------------------------------------------------------------------------------------------------
+
+-- Buscar cliente por correo
+CREATE OR REPLACE PROCEDURE BuscarClientePorEmail(pEmail VARCHAR) AS
+BEGIN
+    FOR r IN (SELECT * FROM Clientes WHERE Email_Cliente = pEmail) LOOP
+        DBMS_OUTPUT.PUT_LINE('Cliente: ' || r.Nombre_Cliente || ' ' || r.Apellido_Cliente);
+    END LOOP;
+END;
+
+-- Actualizar email de empleado
+CREATE OR REPLACE PROCEDURE ActualizarEmailEmpleado(pEmpleadoID NUMBER, pNuevoEmail VARCHAR) AS
+BEGIN
+    UPDATE Empleados SET Email_Empleado = pNuevoEmail WHERE Empleado_ID = pEmpleadoID;
+END;
+
+-- Insertar nuevo estado
+CREATE OR REPLACE PROCEDURE InsertarEstado(pNombre VARCHAR, pDescripcion VARCHAR) AS
+BEGIN
+    INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado)
+    VALUES (Estado_SEQ.NEXTVAL, pNombre, pDescripcion);
+END;
+
+-- Actualizar estado de un servicio realizado
+CREATE OR REPLACE PROCEDURE ActualizarEstadoServicioRealizado(pServicioRealizado NUMBER, pEstadoID NUMBER) AS
+BEGIN
+    UPDATE Servicio_Cliente SET Estado_ID = pEstadoID WHERE Servicio_Realizado = pServicioRealizado;
+END;
+
+-- Insertar nueva categoría de producto
+CREATE OR REPLACE PROCEDURE InsertarCategoriaProducto(pItemID NUMBER, pEstadoID NUMBER, pNombreCat VARCHAR, pDescripcionCat VARCHAR) AS
+BEGIN
+    INSERT INTO Categoria_Producto (Categoria_ID, Item_ID, Estado_ID, Nombre_Categoria, Descripcion_Categoria)
+    VALUES (CategoriaProducto_SEQ.NEXTVAL, pItemID, pEstadoID, pNombreCat, pDescripcionCat);
+END;
+
+-- Consultar servicios realizados por fecha
+CREATE OR REPLACE PROCEDURE ConsultarServiciosPorFecha(pInicio DATE, pFin DATE) AS
+BEGIN
+    FOR r IN (SELECT * FROM Servicio_Cliente WHERE Fecha_ID BETWEEN pInicio AND pFin) LOOP
+        DBMS_OUTPUT.PUT_LINE('Servicio ID: ' || r.Servicio_Realizado);
+    END LOOP;
+END;
+
+-- Eliminar cotización
+CREATE OR REPLACE PROCEDURE EliminarCotizacion(pCotizacionID NUMBER) AS
+BEGIN
+    DELETE FROM Cotizaciones WHERE Cotizacion_ID = pCotizacionID;
+END;
+
+-- Actualizar salario de empleado
+CREATE OR REPLACE PROCEDURE ActualizarSalarioEmpleado(pEmpleadoID NUMBER, pNuevoSalario VARCHAR) AS
+BEGIN
+    UPDATE Empleados SET Salario = pNuevoSalario WHERE Empleado_ID = pEmpleadoID;
+END;
+
+-- Obtener seguimiento por servicio
+CREATE OR REPLACE PROCEDURE ConsultarSeguimientoServicio(pServicioRealizado NUMBER) AS
+BEGIN
+    FOR r IN (SELECT * FROM Seguimiento WHERE Servicio_Realizado = pServicioRealizado) LOOP
+        DBMS_OUTPUT.PUT_LINE('Seguimiento: ' || r.Descripcion_Seguimiento);
+    END LOOP;
+END;
+
+-- Actualizar descripción del inventario
+CREATE OR REPLACE PROCEDURE ActualizarDescripcionInventario(pItemID NUMBER, pNuevaDescripcion VARCHAR) AS
+BEGIN
+    UPDATE Inventario SET Descripcion_Item = pNuevaDescripcion WHERE Item_ID = pItemID;
 END;
