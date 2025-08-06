@@ -409,3 +409,116 @@ INSERT INTO Cotizaciones VALUES (98,5,19,14,77,DATE '2025-03-07');
 INSERT INTO Cotizaciones VALUES (99,8,50,4,33,DATE '2025-04-19');
 INSERT INTO Cotizaciones VALUES (100,6,5,10,64,DATE '2025-05-23');
 
+
+
+--Tabla Categoria_Producto actualizada
+--revisar esta tabla en el archivo de baseDatosTech.sql
+INSERT INTO Categoria_Producto VALUES (2, 22, 4, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (1, 22, 1, 'Memorias', 'Memorias RAM DDR3 y DDR4');
+INSERT INTO Categoria_Producto VALUES (1, 23, 3, 'Almacenamiento', 'Discos SSD y discos duros');
+INSERT INTO Categoria_Producto VALUES (2, 23, 2, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 24, 5, 'Periféricos', 'Mouse, teclados y otros periféricos');
+INSERT INTO Categoria_Producto VALUES (2, 24, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (2, 25, 3, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 25, 4, 'Periféricos', 'Antenas WiFi, tarjetas de red');
+INSERT INTO Categoria_Producto VALUES (4, 26, 2, 'Herramientas', 'Herramientas y sprays para limpieza');
+INSERT INTO Categoria_Producto VALUES (2, 26, 1, 'Hardware', 'Componentes y accesorios de computadora');
+
+INSERT INTO Categoria_Producto VALUES (4, 27, 3, 'Herramientas', 'Kit y cajas de herramientas');
+INSERT INTO Categoria_Producto VALUES (2, 27, 4, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (3, 28, 2, 'Energía', 'Fuentes de poder, baterías, cargadores');
+INSERT INTO Categoria_Producto VALUES (2, 28, 5, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (1, 29, 3, 'Almacenamiento', 'Discos SSD y discos duros');
+INSERT INTO Categoria_Producto VALUES (2, 29, 4, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (2, 30, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 30, 2, 'Periféricos', 'Ventiladores y refrigeración');
+
+INSERT INTO Categoria_Producto VALUES (1, 31, 3, 'Memorias', 'Memorias RAM DDR3 y DDR4');
+INSERT INTO Categoria_Producto VALUES (2, 31, 5, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (7, 32, 2, 'Consumibles', 'Pasta térmica y otros consumibles');
+INSERT INTO Categoria_Producto VALUES (2, 32, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (3, 33, 4, 'Energía', 'Fuentes de poder, baterías, cargadores');
+INSERT INTO Categoria_Producto VALUES (2, 33, 3, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 34, 2, 'Periféricos', 'Tarjetas WiFi, Bluetooth y más');
+INSERT INTO Categoria_Producto VALUES (2, 34, 1, 'Hardware', 'Componentes y accesorios de computadora');
+
+INSERT INTO Categoria_Producto VALUES (6, 35, 4, 'Cables', 'Cables HDMI, USB, VGA, y más');
+INSERT INTO Categoria_Producto VALUES (2, 35, 3, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (4, 36, 5, 'Herramientas', 'Cases y cajas para PC');
+INSERT INTO Categoria_Producto VALUES (2, 36, 2, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 37, 1, 'Periféricos', 'Cámaras web, micrófonos');
+INSERT INTO Categoria_Producto VALUES (2, 37, 4, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (4, 38, 3, 'Herramientas', 'Herramientas de diagnóstico y medición');
+INSERT INTO Categoria_Producto VALUES (2, 38, 5, 'Hardware', 'Componentes y accesorios de computadora');
+
+INSERT INTO Categoria_Producto VALUES (4, 39, 2, 'Herramientas', 'Limpieza y mantenimiento');
+INSERT INTO Categoria_Producto VALUES (2, 39, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 40, 3, 'Software', 'Sistemas operativos y licencias');
+INSERT INTO Categoria_Producto VALUES (2, 40, 4, 'Hardware', 'Componentes y accesorios de computadora');
+
+INSERT INTO Categoria_Producto VALUES (5, 41, 2, 'Periféricos', 'Tarjetas de video, sonido y más');
+INSERT INTO Categoria_Producto VALUES (2, 41, 3, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 42, 1, 'Redes', 'Routers, switches y accesorios de red');
+INSERT INTO Categoria_Producto VALUES (2, 42, 4, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (4, 43, 5, 'Herramientas', 'Kit de destornilladores y precisión');
+INSERT INTO Categoria_Producto VALUES (2, 43, 2, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (1, 44, 3, 'Almacenamiento', 'Discos SSD y discos duros');
+INSERT INTO Categoria_Producto VALUES (2, 44, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (2, 45, 4, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (3, 45, 2, 'Energía', 'Fuentes de poder, baterías, cargadores');
+INSERT INTO Categoria_Producto VALUES (5, 46, 3, 'Periféricos', 'Tarjetas de sonido y multimedia');
+INSERT INTO Categoria_Producto VALUES (2, 46, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 47, 4, 'Periféricos', 'Hubs y accesorios USB');
+INSERT INTO Categoria_Producto VALUES (2, 47, 5, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (3, 48, 2, 'Energía', 'Fuentes de poder, baterías, cargadores');
+INSERT INTO Categoria_Producto VALUES (2, 48, 3, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (1, 49, 1, 'Memorias', 'Memorias RAM DDR3 y DDR4');
+INSERT INTO Categoria_Producto VALUES (2, 49, 4, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 50, 2, 'Periféricos', 'Adaptadores y cables USB');
+INSERT INTO Categoria_Producto VALUES (2, 50, 5, 'Hardware', 'Componentes y accesorios de computadora');
+
+INSERT INTO Categoria_Producto VALUES (3, 51, 3, 'Energía', 'Baterías y cargadores');
+INSERT INTO Categoria_Producto VALUES (2, 51, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 52, 4, 'Redes', 'Switches y routers');
+INSERT INTO Categoria_Producto VALUES (2, 52, 2, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (5, 53, 3, 'Periféricos', 'Teclados y mouse');
+INSERT INTO Categoria_Producto VALUES (2, 53, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 54, 4, 'Periféricos', 'Mouse gamer y accesorios');
+INSERT INTO Categoria_Producto VALUES (2, 54, 5, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 55, 2, 'Redes', 'Tarjetas WiFi y adaptadores');
+INSERT INTO Categoria_Producto VALUES (2, 55, 3, 'Hardware', 'Componentes y accesorios de computadora');
+
+INSERT INTO Categoria_Producto VALUES (4, 56, 1, 'Consumibles', 'Líquidos y herramientas de limpieza');
+INSERT INTO Categoria_Producto VALUES (2, 56, 4, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (1, 57, 2, 'Almacenamiento', 'Discos SSD y discos duros');
+INSERT INTO Categoria_Producto VALUES (2, 57, 3, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (4, 58, 5, 'Consumibles', 'Material de organización y mantenimiento');
+INSERT INTO Categoria_Producto VALUES (2, 58, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 59, 4, 'Periféricos', 'Parlantes y accesorios multimedia');
+INSERT INTO Categoria_Producto VALUES (2, 59, 2, 'Hardware', 'Componentes y accesorios de computadora');
+
+INSERT INTO Categoria_Producto VALUES (4, 60, 3, 'Herramientas', 'Kits de reparación y soldadura');
+INSERT INTO Categoria_Producto VALUES (2, 60, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 61, 4, 'Cables', 'Cables DisplayPort y similares');
+INSERT INTO Categoria_Producto VALUES (2, 61, 5, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (1, 62, 2, 'Almacenamiento', 'Discos SSD y discos duros');
+INSERT INTO Categoria_Producto VALUES (2, 62, 3, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (4, 63, 1, 'Herramientas', 'Monitores y pantallas');
+INSERT INTO Categoria_Producto VALUES (2, 63, 4, 'Hardware', 'Componentes y accesorios de computadora');
+
+INSERT INTO Categoria_Producto VALUES (7, 64, 2, 'Consumibles', 'Pasta térmica y accesorios');
+INSERT INTO Categoria_Producto VALUES (2, 64, 3, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (1, 65, 5, 'Hardware', 'Placas madre y motherboards');
+INSERT INTO Categoria_Producto VALUES (2, 65, 1, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (1, 66, 4, 'Memorias', 'Memorias RAM DDR3 y DDR4');
+INSERT INTO Categoria_Producto VALUES (2, 66, 2, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (1, 67, 3, 'Almacenamiento', 'Discos SSD y discos duros');
+INSERT INTO Categoria_Producto VALUES (2, 67, 1, 'Hardware', 'Componentes y accesorios de computadora');
+
+INSERT INTO Categoria_Producto VALUES (4, 68, 5, 'Consumibles', 'Cables y accesorios para PSU');
+INSERT INTO Categoria_Producto VALUES (2, 68, 2, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (5, 69, 3, 'Periféricos', 'Tarjetas de video y GPU');
+INSERT INTO Categoria_Producto VALUES (2, 69, 4, 'Hardware', 'Componentes y accesorios de computadora');
+INSERT INTO Categoria_Producto VALUES (6, 70, 1, 'Periféricos', 'Ventiladores y refrigeración');
+INSERT INTO Categoria_Producto VALUES (2, 70, 2, 'Hardware', 'Componentes y accesorios de computadora');
+
