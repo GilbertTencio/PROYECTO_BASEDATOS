@@ -171,3 +171,23 @@ INSERT INTO Inventario VALUES (98, 1, 'Adaptador PS/2 a USB', 'Nuevo', 1800, 15)
 INSERT INTO Inventario VALUES (99, 3, 'Microprocesador i5-3470', 'Usado Intel', 48000, 3);
 INSERT INTO Inventario VALUES (100, 1, 'Tarjeta RAID PCIe', 'Nuevas 4 puertos SATA', 68000, 2);
 
+INSERT INTO Gestion_Servicios VALUES (1, 1, 1, 'Instalación SSD Kingston 240GB', 'Instalación profesional de unidad SSD Kingston 240GB nueva');
+INSERT INTO Gestion_Servicios VALUES (2, 1, 2, 'Ampliación de Memoria RAM 8GB DDR4', 'Agregar módulo de memoria RAM Kingston HyperX 8GB DDR4');
+INSERT INTO Gestion_Servicios VALUES (3, 1, 3, 'Reemplazo Fuente de Poder 600W', 'Sustitución de fuente de poder EVGA 600W usada funcional');
+INSERT INTO Gestion_Servicios VALUES (4, 1, 4, 'Reparación Placa Madre ASUS H110M', 'Reparación o reemplazo de placa madre ASUS Intel usada');
+INSERT INTO Gestion_Servicios VALUES (5, 2, 5, 'Suministro y Cambio de Cargadores Universales', 'Reemplazo de cargadores universales nuevos genéricos');
+INSERT INTO Gestion_Servicios VALUES (6, 1, 6, 'Reemplazo Disco Duro 1TB Seagate', 'Sustitución de disco duro Seagate SATA nuevo');
+INSERT INTO Gestion_Servicios VALUES (7, 3, 7, 'Suministro de Kit de Tornillos PC', 'Provisión de bolsitas de tornillos para PC (50 piezas nuevas)');
+INSERT INTO Gestion_Servicios VALUES (8, 1, 8, 'Instalación Tarjeta Video GT 1030', 'Colocación de tarjeta gráfica NVIDIA usada');
+INSERT INTO Gestion_Servicios VALUES (9, 1, 9, 'Cambio Cable HDMI 1.5m', 'Reemplazo de cable HDMI genérico nuevo');
+INSERT INTO Gestion_Servicios VALUES (10, 4, 10, 'Limpieza interna con spray aire comprimido', 'Limpieza profunda de hardware con spray de aire comprimido');
+INSERT INTO Gestion_Servicios VALUES (11, 1, 11, 'Aplicación Pasta Térmica Arctic', 'Colocación de pasta térmica Arctic original 1g');
+INSERT INTO Gestion_Servicios VALUES (12, 1, 12, 'Actualización Memoria RAM 4GB DDR3', 'Sustitución de módulo RAM Kingston usada');
+INSERT INTO Gestion_Servicios VALUES (13, 2, 13, 'Configuración Mouse Logitech M90', 'Instalación y configuración de mouse Logitech nuevo');
+INSERT INTO Gestion_Servicios VALUES (14, 1, 14, 'Instalación Teclado Genérico USB', 'Colocación de teclado USB nuevo económico');
+INSERT INTO Gestion_Servicios VALUES (15, 1, 15, 'Reparación Pantalla LCD 15.6"', 'Cambio de pantalla de laptop usada');
+INSERT INTO Gestion_Servicios VALUES (16, 1, 16, 'Reemplazo Batería HP 14"', 'Sustitución de batería usada para laptop HP');
+INSERT INTO Gestion_Servicios VALUES (17, 3, 17, 'Limpieza con Alcohol Isopropílico', 'Limpieza y desinfección interna con alcohol isopropílico 99%');
+INSERT INTO Gestion_Servicios VALUES (18, 1, 18, 'Instalación SSD NVMe 500GB WD Blue', 'Instalación de SSD NVMe Western Digital Blue nuevo');
+INSERT INTO Gestion_Servicios VALUES (19, 1, 19, 'Instalación Tarjeta WiFi USB TP-Link', 'Configuración y colocación de tarjeta WiFi USB TP-Link nueva');
+INSERT INTO Gestion_Servicios VALUES (20, 5, 20, 'Cambio Cables SATA III', 'Sustitución de cables SATA nuevos empacados');
