@@ -59,7 +59,8 @@ CREATE TABLE Cotizaciones (
     CONSTRAINT FK_Cot_Servicio FOREIGN KEY (Servicio_ID) REFERENCES Gestion_Servicios(Servicio_ID),
     CONSTRAINT FK_Cot_Empleado FOREIGN KEY (Empleado_ID) REFERENCES Empleados(Empleado_ID)
 );
-
+/*
+-- esta tabla mostraba errores
 CREATE TABLE Categoria_Producto (
     Categoria_ID NUMBER PRIMARY KEY,
     Item_ID NUMBER,
@@ -68,7 +69,20 @@ CREATE TABLE Categoria_Producto (
     Descripcion_Categoria VARCHAR(1000),
     CONSTRAINT FK_CP_Estado FOREIGN KEY (Estado_ID) REFERENCES Estado(Estado_ID),
     CONSTRAINT FK_CP_Item FOREIGN KEY (Item_ID) REFERENCES Inventario(Item_ID)
+);*/
+--usen esta 
+CREATE TABLE Categoria_Producto (
+    Categoria_ID NUMBER,
+    Item_ID NUMBER,
+    Estado_ID NUMBER,
+    Nombre_Categoria VARCHAR2(1000),
+    Descripcion_Categoria VARCHAR2(1000),
+    CONSTRAINT PK_Categoria_Producto PRIMARY KEY (Categoria_ID, Item_ID),
+    CONSTRAINT FK_CP_Estado FOREIGN KEY (Estado_ID) REFERENCES Estado(Estado_ID),
+    CONSTRAINT FK_CP_Item FOREIGN KEY (Item_ID) REFERENCES Inventario(Item_ID)
 );
+
+
 
 CREATE TABLE Servicio_Cliente (
     Servicio_Realizado NUMBER PRIMARY KEY,
