@@ -1,7 +1,7 @@
 ALTER TABLE Estado
 MODIFY (Nombre_Estado VARCHAR2(20));
 
--- Tabla Estado
+-- Tabla Estado actualizada
 INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (1, 'Activo', 'Disponible');
 INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (2, 'Inactivo', 'No disponible');
 INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (3, 'Pendiente', 'En espera');
@@ -24,7 +24,7 @@ INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (19, 'R
 INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (20, 'Desactivado', 'Fuera de uso');
 
 
--- Tabla clientes 
+-- Tabla clientes actualizada
 INSERT INTO Clientes VALUES (1, 1, 'María', 'González', 'San José', 'maria.gonzalez@gmail.com');
 INSERT INTO Clientes VALUES (2, 1, 'Juan', 'Rodríguez', 'Cartago', 'juan.rodriguez@hotmail.com');
 INSERT INTO Clientes VALUES (3, 2, 'Carlos', 'Soto', 'Alajuela', 'carlos.soto@yahoo.com');
@@ -67,9 +67,8 @@ INSERT INTO Clientes VALUES (39, 2, 'Pablo', 'Cubero', 'Alajuela', 'pablo.cubero
 INSERT INTO Clientes VALUES (40, 1, 'Andrea', 'Céspedes', 'Cartago', 'andrea.cespedes@gmail.com');
 
 
---Tabla de inventario
 
-
+--Tabla de inventario actualizada
 INSERT INTO Inventario VALUES (1, 1, 'SSD Kingston 240GB', 'Unidad estado sólido nueva', 35000, 12);
 INSERT INTO Inventario VALUES (2, 1, 'Memoria RAM 8GB DDR4', 'Kingston HyperX nueva', 28000, 15);
 INSERT INTO Inventario VALUES (3, 1, 'Fuente poder 600W', 'EVGA 600W usada funcional', 42000, 4);
@@ -171,6 +170,9 @@ INSERT INTO Inventario VALUES (98, 1, 'Adaptador PS/2 a USB', 'Nuevo', 1800, 15)
 INSERT INTO Inventario VALUES (99, 3, 'Microprocesador i5-3470', 'Usado Intel', 48000, 3);
 INSERT INTO Inventario VALUES (100, 1, 'Tarjeta RAID PCIe', 'Nuevas 4 puertos SATA', 68000, 2);
 
+
+
+--Tabla de Gestion_Servicios actualizada
 INSERT INTO Gestion_Servicios VALUES (1, 1, 1, 'Instalación SSD Kingston 240GB', 'Instalación profesional de unidad SSD Kingston 240GB nueva');
 INSERT INTO Gestion_Servicios VALUES (2, 1, 2, 'Ampliación de Memoria RAM 8GB DDR4', 'Agregar módulo de memoria RAM Kingston HyperX 8GB DDR4');
 INSERT INTO Gestion_Servicios VALUES (3, 1, 3, 'Reemplazo Fuente de Poder 600W', 'Sustitución de fuente de poder EVGA 600W usada funcional');
@@ -191,3 +193,110 @@ INSERT INTO Gestion_Servicios VALUES (17, 3, 17, 'Limpieza con Alcohol Isopropí
 INSERT INTO Gestion_Servicios VALUES (18, 1, 18, 'Instalación SSD NVMe 500GB WD Blue', 'Instalación de SSD NVMe Western Digital Blue nuevo');
 INSERT INTO Gestion_Servicios VALUES (19, 1, 19, 'Instalación Tarjeta WiFi USB TP-Link', 'Configuración y colocación de tarjeta WiFi USB TP-Link nueva');
 INSERT INTO Gestion_Servicios VALUES (20, 5, 20, 'Cambio Cables SATA III', 'Sustitución de cables SATA nuevos empacados');
+
+
+--Tabla de Empleados actualizada 
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (1, 1, 'Juan', 'Pérez', 'juan.perez@empresa.com', 'Gerente de Proyectos', '65000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (2, 1, 'Ana', 'García', 'ana.garcia@empresa.com', 'Analista de Datos', '58000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (3, 1, 'Carlos', 'López', 'carlos.lopez@empresa.com', 'Desarrollador Senior', '85000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (4, 1, 'Sofía', 'Martínez', 'sofia.martinez@empresa.com', 'Diseñadora UX/UI', '72000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (5, 2, 'Pedro', 'Sánchez', 'pedro.sanchez@empresa.com', 'Especialista en Marketing', '60000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (6, 1, 'Laura', 'Ramírez', 'laura.ramirez@empresa.com', 'Contadora', '55000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (7, 1, 'José', 'Torres', 'jose.torres@empresa.com', 'Director de Ventas', '95000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (8, 1, 'María', 'Díaz', 'maria.diaz@empresa.com', 'Asistente Administrativa', '45000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (9, 3, 'Felipe', 'Vargas', 'felipe.vargas@empresa.com', 'Ingeniero de Software', '78000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (10, 1, 'Gabriela', 'Castro', 'gabriela.castro@empresa.com', 'Recursos Humanos', '62000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (11, 1, 'Diego', 'Rojas', 'diego.rojas@empresa.com', 'Técnico de Soporte', '48000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (12, 1, 'Patricia', 'Herrera', 'patricia.herrera@empresa.com', 'Especialista en QA', '68000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (13, 1, 'Ricardo', 'Gómez', 'ricardo.gomez@empresa.com', 'Arquitecto de Soluciones', '110000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (14, 2, 'Andrea', 'Núñez', 'andrea.nunez@empresa.com', 'Coordinadora de Eventos', '57000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (15, 1, 'Manuel', 'Salazar', 'manuel.salazar@empresa.com', 'Gestor de Contenido', '59000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (16, 1, 'Cristina', 'Ortega', 'cristina.ortega@empresa.com', 'Analista Financiera', '75000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (17, 3, 'Fernando', 'Guerrero', 'fernando.guerrero@empresa.com', 'Consultor Senior', '92000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (18, 1, 'Isabel', 'Morales', 'isabel.morales@empresa.com', 'Asistente de Marketing', '51000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (19, 1, 'Daniel', 'Silva', 'daniel.silva@empresa.com', 'Jefe de Equipo', '88000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (20, 1, 'Valeria', 'Ríos', 'valeria.rios@empresa.com', 'Especialista en SEO', '64000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (21, 1, 'Andrés', 'Soto', 'andres.soto@empresa.com', 'Desarrollador Junior', '42000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (22, 1, 'Elena', 'Mendoza', 'elena.mendoza@empresa.com', 'Directora de Contabilidad', '98000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (23, 1, 'Sergio', 'Castañeda', 'sergio.castaneda@empresa.com', 'Analista de Negocios', '70000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (24, 1, 'Paola', 'Velasco', 'paola.velasco@empresa.com', 'Coordinadora de RH', '59000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (25, 2, 'Javier', 'Luna', 'javier.luna@empresa.com', 'Representante de Ventas', '50000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (26, 1, 'Mónica', 'Fuentes', 'monica.fuentes@empresa.com', 'Gerente de Operaciones', '88000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (27, 1, 'Roberto', 'Paz', 'roberto.paz@empresa.com', 'Especialista en IT', '65000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (28, 1, 'Diana', 'Miranda', 'diana.miranda@empresa.com', 'Auditora', '77000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (29, 3, 'Pablo', 'Mora', 'pablo.mora@empresa.com', 'Programador', '60000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (30, 1, 'Verónica', 'Silva', 'veronica.silva@empresa.com', 'Investigadora de Mercado', '68000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (31, 1, 'Antonio', 'Paredes', 'antonio.paredes@empresa.com', 'Coordinador de Logística', '63000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (32, 1, 'Lucía', 'Guzmán', 'lucia.guzman@empresa.com', 'Especialista en Marketing Digital', '71000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (33, 1, 'Martín', 'Acosta', 'martin.acosta@empresa.com', 'Director de Marketing', '105000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (34, 2, 'Natalia', 'Fuentes', 'natalia.fuentes@empresa.com', 'Diseñadora Gráfica', '56000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (35, 1, 'Alejandro', 'Reyes', 'alejandro.reyes@empresa.com', 'Jefe de Producción', '80000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (36, 1, 'Cecilia', 'Peralta', 'cecilia.peralta@empresa.com', 'Asistente de Contabilidad', '47000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (37, 3, 'Gustavo', 'Castro', 'gustavo.castro@empresa.com', 'Estratega de Contenido', '70000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (38, 1, 'Emilia', 'Méndez', 'emilia.mendez@empresa.com', 'Ejecutiva de Cuentas', '62000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (39, 1, 'Jorge', 'Sáenz', 'jorge.saenz@empresa.com', 'Gerente de TI', '95000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (40, 1, 'Marcela', 'Vidal', 'marcela.vidal@empresa.com', 'Asistente de Recursos Humanos', '53000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (41, 1, 'Luis', 'Cabrera', 'luis.cabrera@empresa.com', 'Ingeniero Civil', '75000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (42, 1, 'Isabella', 'Rojas', 'isabella.rojas@empresa.com', 'Jefa de Calidad', '81000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (43, 1, 'Ignacio', 'Herrera', 'ignacio.herrera@empresa.com', 'Consultor Financiero', '90000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (44, 1, 'Paula', 'Molina', 'paula.molina@empresa.com', 'Especialista en Comunicación', '66000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (45, 2, 'Vicente', 'Méndez', 'vicente.mendez@empresa.com', 'Director de Operaciones', '120000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (46, 1, 'Adriana', 'Cortés', 'adriana.cortes@empresa.com', 'Diseñadora de Producto', '78000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (47, 1, 'Mario', 'Navarro', 'mario.navarro@empresa.com', 'Desarrollador Full Stack', '85000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (48, 1, 'Silvia', 'Ramírez', 'silvia.ramirez@empresa.com', 'Jefa de Departamento', '98000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (49, 3, 'Fabián', 'Vargas', 'fabian.vargas@empresa.com', 'Analista de Seguridad', '75000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (50, 1, 'Camila', 'Morales', 'camila.morales@empresa.com', 'Especialista en Adquisiciones', '69000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (51, 1, 'Álvaro', 'Guerrero', 'alvaro.guerrero@empresa.com', 'Técnico de Redes', '52000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (52, 1, 'Carolina', 'Ortega', 'carolina.ortega@empresa.com', 'Gerente de Contenido', '83000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (53, 1, 'Héctor', 'Ruiz', 'hector.ruiz@empresa.com', 'Estratega de Negocios', '115000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (54, 2, 'Clara', 'Reyes', 'clara.reyes@empresa.com', 'Asistente Legal', '60000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (55, 1, 'Óscar', 'Peralta', 'oscar.peralta@empresa.com', 'Supervisor de Almacén', '55000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (56, 1, 'Julia', 'Silva', 'julia.silva@empresa.com', 'Técnica de Laboratorio', '49000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (57, 3, 'Rubén', 'Vidal', 'ruben.vidal@empresa.com', 'Especialista en Ciberseguridad', '95000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (58, 1, 'Alejandra', 'Sáenz', 'alejandra.saenz@empresa.com', 'Gerente de Producto', '105000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (59, 1, 'Fidel', 'Velasco', 'fidel.velasco@empresa.com', 'Diseñador Web', '68000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (60, 1, 'Marisol', 'Luna', 'marisol.luna@empresa.com', 'Coordinadora de Proyectos', '74000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (61, 1, 'Guillermo', 'Díaz', 'guillermo.diaz@empresa.com', 'Contador Senior', '80000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (62, 1, 'Leticia', 'Castro', 'leticia.castro@empresa.com', 'Jefa de Equipo de Ventas', '85000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (63, 1, 'Raúl', 'Silva', 'raul.silva@empresa.com', 'Asistente de Gerencia', '55000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (64, 1, 'Susana', 'Ríos', 'susana.rios@empresa.com', 'Especialista en Logística', '65000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (65, 2, 'Enrique', 'Pérez', 'enrique.perez@empresa.com', 'Desarrollador de Apps', '75000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (66, 1, 'Sara', 'Martínez', 'sara.martinez@empresa.com', 'Analista de Calidad', '61000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (67, 1, 'Eduardo', 'Sánchez', 'eduardo.sanchez@empresa.com', 'Gerente de Sucursal', '90000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (68, 1, 'Renata', 'Fuentes', 'renata.fuentes@empresa.com', 'Técnica de Mantenimiento', '50000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (69, 3, 'Tomás', 'López', 'tomas.lopez@empresa.com', 'Ingeniero de Sistemas', '82000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (70, 1, 'Valeria', 'Morales', 'valeria.morales@empresa.com', 'Asesora Financiera', '72000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (71, 1, 'Ricardo', 'Gómez', 'ricardo.gomez@empresa.com', 'Coordinador de Marketing', '69000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (72, 1, 'Paula', 'Núñez', 'paula.nunez@empresa.com', 'Jefa de Sección', '78000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (73, 1, 'Alejandro', 'Díaz', 'alejandro.diaz@empresa.com', 'Especialista en RRHH', '64000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (74, 2, 'Fernanda', 'Soto', 'fernanda.soto@empresa.com', 'Asistente de Cuentas', '53000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (75, 1, 'Héctor', 'Torres', 'hector.torres@empresa.com', 'Jefe de Departamento', '95000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (76, 1, 'Viviana', 'García', 'viviana.garcia@empresa.com', 'Analista de Sistemas', '76000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (77, 1, 'Gustavo', 'Ramírez', 'gustavo.ramirez@empresa.com', 'Especialista en Soporte', '58000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (78, 1, 'Lorena', 'Herrera', 'lorena.herrera@empresa.com', 'Coordinadora de Operaciones', '71000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (79, 3, 'Esteban', 'Peralta', 'esteban.peralta@empresa.com', 'Desarrollador Junior', '45000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (80, 1, 'Marisol', 'Vargas', 'marisol.vargas@empresa.com', 'Asistente Administrativa', '48000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (81, 1, 'Andrés', 'Silva', 'andres.silva@empresa.com', 'Gerente de TI', '110000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (82, 1, 'Valeria', 'Castro', 'valeria.castro@empresa.com', 'Especialista en Marketing', '70000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (83, 1, 'Arturo', 'Mora', 'arturo.mora@empresa.com', 'Analista de Datos', '62000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (84, 1, 'Gabriela', 'López', 'gabriela.lopez@empresa.com', 'Contadora Senior', '85000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (85, 2, 'Javier', 'Salazar', 'javier.salazar@empresa.com', 'Diseñador Gráfico', '58000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (86, 1, 'Sofía', 'Paredes', 'sofia.paredes@empresa.com', 'Especialista en Contenido', '66000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (87, 1, 'Manuel', 'Ortiz', 'manuel.ortiz@empresa.com', 'Gerente de Proyectos', '95000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (88, 1, 'Laura', 'Reyes', 'laura.reyes@empresa.com', 'Asistente de Marketing', '51000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (89, 3, 'Juan', 'Vargas', 'juan.vargas@empresa.com', 'Desarrollador Full Stack', '88000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (90, 1, 'María', 'Fuentes', 'maria.fuentes@empresa.com', 'Especialista en SEO', '64000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (91, 1, 'José', 'Pérez', 'jose.perez@empresa.com', 'Técnico de Soporte', '48000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (92, 1, 'Ana', 'García', 'ana.garcia@empresa.com', 'Especialista en QA', '68000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (93, 1, 'Carlos', 'Martínez', 'carlos.martinez@empresa.com', 'Arquitecto de Soluciones', '110000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (94, 2, 'Luisa', 'Díaz', 'luisa.diaz@empresa.com', 'Coordinadora de Eventos', '57000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (95, 1, 'Felipe', 'Sánchez', 'felipe.sanchez@empresa.com', 'Gestor de Contenido', '59000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (96, 1, 'Cristina', 'Ramírez', 'cristina.ramirez@empresa.com', 'Analista Financiera', '75000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (97, 1, 'Fernando', 'López', 'fernando.lopez@empresa.com', 'Consultor Senior', '92000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (98, 1, 'Isabel', 'Gómez', 'isabel.gomez@empresa.com', 'Asistente de Marketing', '51000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (99, 3, 'Daniel', 'Núñez', 'daniel.nunez@empresa.com', 'Jefe de Equipo', '88000');
+INSERT INTO Empleados (Empleado_ID, Estado_ID, Nombre_Empleado, Apellido_Empleado, Email_Empleado, Puesto, Salario) VALUES (100, 1, 'Valeria', 'Vargas', 'valeria.vargas@empresa.com', 'Especialista en SEO', '64000');
+
+
+
+--
