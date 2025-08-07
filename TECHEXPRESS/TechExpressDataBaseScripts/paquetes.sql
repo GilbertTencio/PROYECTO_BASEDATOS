@@ -123,3 +123,51 @@ CREATE OR REPLACE PACKAGE BODY pkg_clientes AS
     END ActualizarEstadoCliente;
 
 END pkg_clientes;
+
+/*Este es un ejemplo de como se usa
+
+BEGIN
+  pkg_clientes.ActualizarEstadoCliente(
+    p_cliente_id => 1,
+    p_estado_id  => 2
+  );
+END;
+
+
+
+BEGIN
+  pkg_clientes.BuscarClientePorCorreo(
+    p_Email => 'carlos.ramirez@email.com'
+  );
+END;
+
+
+BEGIN
+  pkg_clientes.EliminarCliente(
+    p_ClienteID => 40
+  );
+END;
+
+BEGIN
+  pkg_clientes.ActualizarCliente(
+    p_ClienteID  => 1,
+    p_Nombre     => 'Carlos Alberto',
+    p_Apellido   => 'Ramírez Gómez',
+    p_Residencia => 'Heredia Centro',
+    p_Email      => 'carlos.a.ramirez@email.com'
+  );
+END;
+
+EL DE AGREGAR CLIENTE ESTA FALLANDO, INVESTIGARÉ MAS TARDE 
+BEGIN
+  pkg_clientes.InsertarCliente(
+    p_Nombre     => 'Carlos',
+    p_Apellido   => 'Ramírez',
+    p_Residencia => 'Heredia',
+    p_Email      => 'carlos.ramirez@email.com',
+    p_EstadoID   => 40
+  );
+END;
+
+
+*/
