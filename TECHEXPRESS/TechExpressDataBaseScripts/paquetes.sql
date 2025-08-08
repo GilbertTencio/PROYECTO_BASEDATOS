@@ -1,3 +1,5 @@
+--por el momento todos los procedimientos de incertar datos a las tablas estan fallando, cuando se hace un insert a mano funciona, haciendo pruebas a los procedimientos de insertar a las tablas se ve que ninguno funciona 
+
 --este paquete esta encargado de gestionar la logica que tienen los procedimientos almacenados con los clientes
 
 
@@ -335,6 +337,179 @@ BEGIN
         p_EmpleadoID => 1,
         p_Email      => 'nuevo.email@email.com'
     );
+END;
+/
+*/
+
+CREATE OR REPLACE PACKAGE pkg_inventario AS
+
+  -- Inserta un nuevo item en Inventario (genera Item_ID automáticamente)
+  PROCEDURE InsertarInventario(
+    p_EstadoID       IN NUMBER,
+    p_NombreItem     IN VARCHAR2,
+    p_Descripcion    IN VARCHAR2,
+    p_PrecioUnitario IN NUMBER,
+    p_Cantidad       IN NUMBER
+  );
+
+  -- Actualiza la cantidad de un item (no puede quedar negativa).
+  PROCEDURE ActualizarCantidadInventario(
+    p_ItemID        IN NUMBER,
+    p_NuevaCantidad IN NUMBER
+  );
+
+  -- Actualiza la descripción de un item
+  PROCEDURE ActualizarDescripcionInventario(
+    p_ItemID          IN NUMBER,
+    p_NuevaDescripcion IN VARCHAR2
+  );
+
+END pkg_inventario;
+/
+
+CREATE OR REPLACE PACKAGE BODY pkg_inventario AS
+
+  PROCEDURE InsertarInventario(
+    p_EstadoID       IN NUMBER,
+    p_NombreItem     IN VARCHAR2,
+    p_Descripcion    IN VARCHAR2,
+    p_PrecioUnitario IN NUMBER,
+    p_Cantidad       IN NUMBER
+  ) IS
+    v_new_id NUMBER;
+  BEGIN
+    -- Validaciones
+    IF p_Cantidad IS NULL THEN
+      RAISE_APPLICATION_ERROR(-20001, 'La cantidad es obligatoria.');
+    END IF;
+    IF p_PrecioUnitario IS NULL THEN
+      RAISE_APPLICATION_ERROR(-20002, 'El precio unitario es obligatorio.');
+    END IF;
+    IF p_Cantidad < 0 THEN
+      RAISE_APPLICATION_ERROR(-20003, 'La cantidad no puede ser negativa.');
+    END IF;
+    IF p_PrecioUnitario < 0 THEN
+      RAISE_APPLICATION_ERROR(-20004, 'El precio unitario no puede ser negativo.');
+    END IF;
+
+    -- Insert con Item_ID generado por secuencia
+    v_new_id := Inventario_SEQ.NEXTVAL;
+    INSERT INTO Inventario (
+      Item_ID, Estado_ID, Nombre_Item, Descripcion_Item, Precio_Unitario, Cantidad_Item
+    ) VALUES (
+      v_new_id, p_EstadoID, p_NombreItem, p_Descripcion, p_PrecioUnitario, p_Cantidad
+    );
+
+    COMMIT;
+
+    DBMS_OUTPUT.PUT_LINE('Item insertado. Item_ID = ' || v_new_id);
+  EXCEPTION
+    WHEN OTHERS THEN
+      ROLLBACK;
+      RAISE;
+  END InsertarInventario;
+
+
+  PROCEDURE ActualizarCantidadInventario(
+    p_ItemID        IN NUMBER,
+    p_NuevaCantidad IN NUMBER
+  ) IS
+  BEGIN
+    IF p_NuevaCantidad IS NULL THEN
+      RAISE_APPLICATION_ERROR(-20005, 'La nueva cantidad es obligatoria.');
+    END IF;
+    IF p_NuevaCantidad < 0 THEN
+      RAISE_APPLICATION_ERROR(-20006, 'La cantidad no puede ser negativa.');
+    END IF;
+
+    UPDATE Inventario
+    SET Cantidad_Item = p_NuevaCantidad
+    WHERE Item_ID = p_ItemID;
+
+    IF SQL%ROWCOUNT = 0 THEN
+      RAISE_APPLICATION_ERROR(-20007, 'Item no encontrado: Item_ID = ' || p_ItemID);
+    END IF;
+
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Cantidad actualizada para Item_ID = ' || p_ItemID || '. Nueva cantidad = ' || p_NuevaCantidad);
+  EXCEPTION
+    WHEN OTHERS THEN
+      ROLLBACK;
+      RAISE;
+  END ActualizarCantidadInventario;
+
+
+  PROCEDURE ActualizarDescripcionInventario(
+    p_ItemID           IN NUMBER,
+    p_NuevaDescripcion IN VARCHAR2
+  ) IS
+  BEGIN
+    UPDATE Inventario
+    SET Descripcion_Item = p_NuevaDescripcion
+    WHERE Item_ID = p_ItemID;
+
+    IF SQL%ROWCOUNT = 0 THEN
+      RAISE_APPLICATION_ERROR(-20008, 'Item no encontrado: Item_ID = ' || p_ItemID);
+    END IF;
+
+    COMMIT;
+    DBMS_OUTPUT.PUT_LINE('Descripción actualizada para Item_ID = ' || p_ItemID);
+  EXCEPTION
+    WHEN OTHERS THEN
+      ROLLBACK;
+      RAISE;
+  END ActualizarDescripcionInventario;
+
+END pkg_inventario;
+/
+
+
+
+CREATE SEQUENCE CATEGORIA_PRODUCTO_SEQ
+START WITH 1
+INCREMENT BY 1
+NOCACHE;
+
+
+/*
+--no funciona
+BEGIN
+  pkg_inventario.InsertarInventario(
+    p_EstadoID       => 102,
+    p_NombreItem     => 'Tarjeta RAID PCIe',
+    p_Descripcion    => 'Nuevas 4 puertos SATA',
+    p_PrecioUnitario => 68000,
+    p_Cantidad       => 2
+  );
+END;
+/
+-- Revisa inventario y categoría:
+SELECT * FROM Inventario WHERE Item_ID > 0 ORDER BY Item_ID DESC FETCH FIRST 5 ROWS ONLY;
+SELECT * FROM Categoria_Producto WHERE Item_ID = (SELECT MAX(Item_ID) FROM Inventario);
+
+
+-- la fincion de rechasar numeros negativos funciona, pero no permite ingresar nada
+BEGIN
+  pkg_inventario.InsertarInventario(109,'Prueba','Desc',1000,6);
+END;
+/
+-- Espera RAISE_APPLICATION_ERROR con código -20003
+
+
+BEGIN
+  pkg_inventario.ActualizarCantidadInventario(p_ItemID => 3, p_NuevaCantidad => 100);
+END;
+/
+
+BEGIN
+  pkg_inventario.ActualizarCantidadInventario(p_ItemID => 99999, p_NuevaCantidad => 2);
+END;
+/
+-- Espera error -20007: Item no encontrado
+
+
+BEGIN
+  pkg_inventario.ActualizarDescripcionInventario(p_ItemID => 4, p_NuevaDescripcion => 'Placa madre ASUS H110M - revisada');
 END;
 /
 */
