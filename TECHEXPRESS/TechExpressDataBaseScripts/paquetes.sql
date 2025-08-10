@@ -1301,3 +1301,135 @@ END pkg_pagos;
 ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+  --pkg_utilidades
+CREATE OR REPLACE PACKAGE pkg_utilidades AS
+    -- Cursores reutilizables
+    CURSOR cur_clientes_activos IS
+        SELECT Cliente_ID, Nombre_Cliente, Apellido_Cliente, Email_Cliente
+        FROM Clientes
+        WHERE Estado_ID = 1;
+
+    CURSOR cur_inventario_bajo IS
+        SELECT Item_ID, Nombre_Item, Cantidad_Item
+        FROM Inventario
+        WHERE Cantidad_Item < 5;
+
+    -- Validaciones
+    FUNCTION ExisteCliente(pClienteID NUMBER) RETURN BOOLEAN;
+    FUNCTION ExisteProducto(pItemID NUMBER) RETURN BOOLEAN;
+    FUNCTION ExisteEmpleado(pEmpleadoID NUMBER) RETURN BOOLEAN;
+
+    -- Funciones auxiliares
+    FUNCTION ObtenerNombreEmpleado(pEmpleadoID NUMBER) RETURN VARCHAR2;
+    FUNCTION ObtenerCategoria(pCategoriaID NUMBER) RETURN VARCHAR2;
+END pkg_utilidades;
+
+
+
+CREATE OR REPLACE PACKAGE BODY pkg_utilidades AS
+
+    -- Validar si existe cliente
+    FUNCTION ExisteCliente(pClienteID NUMBER) RETURN BOOLEAN IS
+        vCount NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO vCount
+        FROM Clientes
+        WHERE Cliente_ID = pClienteID;
+        RETURN vCount > 0;
+    END;
+
+    -- Validar si existe producto
+    FUNCTION ExisteProducto(pItemID NUMBER) RETURN BOOLEAN IS
+        vCount NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO vCount
+        FROM Inventario
+        WHERE Item_ID = pItemID;
+        RETURN vCount > 0;
+    END;
+
+    -- Validar si existe empleado
+    FUNCTION ExisteEmpleado(pEmpleadoID NUMBER) RETURN BOOLEAN IS
+        vCount NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO vCount
+        FROM Empleados
+        WHERE Empleado_ID = pEmpleadoID;
+        RETURN vCount > 0;
+    END;
+
+    -- Obtener nombre completo del empleado
+    FUNCTION ObtenerNombreEmpleado(pEmpleadoID NUMBER) RETURN VARCHAR2 IS
+        vNombre VARCHAR2(2000);
+    BEGIN
+        SELECT Nombre_Empleado || ' ' || Apellido_Empleado
+        INTO vNombre
+        FROM Empleados
+        WHERE Empleado_ID = pEmpleadoID;
+
+        RETURN vNombre;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN 'Empleado no encontrado';
+    END;
+
+    -- Obtener nombre de categoría
+    FUNCTION ObtenerCategoria(pCategoriaID NUMBER) RETURN VARCHAR2 IS
+        vNombreCat VARCHAR2(2000);
+    BEGIN
+        SELECT Nombre_Categoria
+        INTO vNombreCat
+        FROM Categoria_Producto
+        WHERE Categoria_ID = pCategoriaID
+        FETCH FIRST 1 ROWS ONLY;
+
+        RETURN vNombreCat;
+    EXCEPTION
+        WHEN NO_DATA_FOUND THEN
+            RETURN 'Categoría no encontrada';
+    END;
+
+END pkg_utilidades;
+
+/*
+BEGIN
+    pkg_servicios.ActualizarEstadoServicioRealizado(
+        pServicioRealizado => 5,
+        pEstadoID          => 2
+    );
+END;
+/
+
+SET SERVEROUTPUT ON;
+
+BEGIN
+    pkg_servicios.ConsultarServiciosRealizadosPorFecha(
+        pInicio => TO_DATE('2025-07-01', 'YYYY-MM-DD'),
+        pFin    => TO_DATE('2025-07-31', 'YYYY-MM-DD')
+    );
+END;
+/
+
+
+Error starting at line : 111 in command -
+BEGIN
+    pkg_servicios.InsertarServicioCliente(
+        pEmpleadoID => 1,
+        pServicioID => 2,
+        pClienteID  => 3,
+        pEstadoID   => 1,
+        pFecha      => SYSDATE,
+        pCantidad   => 2,
+        pPrecioTotal=> 150.75
+    );
+END;
+Error report -
+ORA-00001: unique constraint (HR.SYS_C007471) violated
+ORA-06512: at "HR.PKG_SERVICIOS", line 44
+ORA-06512: at line 2
+00001. 00000 -  "unique constraint (%s.%s) violated"
+*Cause:    An UPDATE or INSERT statement attempted to insert a duplicate key.
+           For Trusted Oracle configured in DBMS MAC mode, you may see
+           this message if a duplicate entry exists at a different level.
+*Action:   Either remove the unique restriction or do not insert the key.
+*/
