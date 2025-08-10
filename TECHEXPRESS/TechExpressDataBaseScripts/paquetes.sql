@@ -1137,3 +1137,107 @@ BEGIN
     );
 END;
 /
+
+
+
+CREATE OR REPLACE PACKAGE pkg_seguimiento AS
+    -- Insertar un seguimiento para un servicio realizado
+    PROCEDURE InsertarSeguimiento(
+        pServicioRealizadoID NUMBER,
+        pDescripcion         VARCHAR2,
+        pFechaSeguimiento    DATE
+    );
+
+    -- Obtener seguimientos por servicio realizado
+    PROCEDURE ObtenerSeguimientoPorServicio(
+        pServicioRealizadoID NUMBER
+    );
+END pkg_seguimiento;
+
+
+CREATE OR REPLACE PACKAGE BODY pkg_seguimiento AS
+
+    PROCEDURE InsertarSeguimiento(
+        pServicioRealizadoID NUMBER,
+        pDescripcion         VARCHAR2,
+        pFechaSeguimiento    DATE
+    ) AS
+        vExisteServicio NUMBER;
+    BEGIN
+        -- Validar que el servicio realizado existe
+        SELECT COUNT(*) INTO vExisteServicio
+        FROM Servicio_Cliente
+        WHERE Servicio_Realizado = pServicioRealizadoID;
+
+        IF vExisteServicio = 0 THEN
+            RAISE_APPLICATION_ERROR(-20010, 'El servicio realizado no existe.');
+        END IF;
+
+        -- Insertar seguimiento
+        INSERT INTO Seguimiento (
+            Seguimiento_ID,
+            Servicio_Realizado,
+            Descripcion_Seguimiento,
+            Fecha_Seguimiento
+        ) VALUES (
+            Seguimiento_SEQ.NEXTVAL,
+            pServicioRealizadoID,
+            pDescripcion,
+            pFechaSeguimiento
+        );
+
+        DBMS_OUTPUT.PUT_LINE('Seguimiento insertado correctamente.');
+    END InsertarSeguimiento;
+
+
+    PROCEDURE ObtenerSeguimientoPorServicio(
+        pServicioRealizadoID NUMBER
+    ) AS
+        vExisteServicio NUMBER;
+    BEGIN
+        -- Validar que el servicio realizado existe
+        SELECT COUNT(*) INTO vExisteServicio
+        FROM Servicio_Cliente
+        WHERE Servicio_Realizado = pServicioRealizadoID;
+
+        IF vExisteServicio = 0 THEN
+            RAISE_APPLICATION_ERROR(-20011, 'No se encontró el servicio realizado.');
+        END IF;
+
+        -- Mostrar seguimientos asociados
+        FOR r IN (
+            SELECT Seguimiento_ID,
+                   Descripcion_Seguimiento,
+                   Fecha_Seguimiento
+            FROM Seguimiento
+            WHERE Servicio_Realizado = pServicioRealizadoID
+            ORDER BY Fecha_Seguimiento
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE(
+                'ID: ' || r.Seguimiento_ID ||
+                ' | Fecha: ' || TO_CHAR(r.Fecha_Seguimiento, 'YYYY-MM-DD') ||
+                ' | Descripción: ' || r.Descripcion_Seguimiento
+            );
+        END LOOP;
+    END ObtenerSeguimientoPorServicio;
+
+END pkg_seguimiento;
+
+
+
+BEGIN
+    pkg_seguimiento.InsertarSeguimiento(
+        pServicioRealizadoID => 101,  -- ID de un servicio que ya exista
+        pDescripcion         => 'Revisión final del equipo y entrega al cliente.',
+        pFechaSeguimiento    => SYSDATE
+    );
+END;
+/
+
+
+BEGIN
+    pkg_seguimiento.ObtenerSeguimientoPorServicio(
+        pServicioRealizadoID => 10
+    );
+END;
+
