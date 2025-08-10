@@ -513,5 +513,109 @@ BEGIN
 END;
 /
 */
+CREATE OR REPLACE PACKAGE pkg_estado AS
+    PROCEDURE InsertarEstado(
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    );
 
+    PROCEDURE ActualizarEstado(
+        pEstado_ID           NUMBER,
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    );
+
+    PROCEDURE EliminarEstado(
+        pEstado_ID NUMBER
+    );
+END pkg_estado;
+
+
+CREATE OR REPLACE PACKAGE BODY pkg_estado AS
+
+    PROCEDURE InsertarEstado(
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    ) AS
+        vCount NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO vCount
+        FROM Estado
+        WHERE UPPER(Nombre_Estado) = UPPER(pNombre_Estado);
+
+        IF vCount > 0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'El estado ya existe.');
+        END IF;
+
+        INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado)
+        VALUES (Estado_SEQ.NEXTVAL, pNombre_Estado, pDescripcion_Estado);
+
+        DBMS_OUTPUT.PUT_LINE('Estado insertado correctamente.');
+    END InsertarEstado;
+
+    PROCEDURE ActualizarEstado(
+        pEstado_ID           NUMBER,
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    ) AS
+        vCount NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO vCount
+        FROM Estado
+        WHERE Estado_ID = pEstado_ID;
+
+        IF vCount = 0 THEN
+            RAISE_APPLICATION_ERROR(-20002, 'El estado no existe.');
+        END IF;
+
+        UPDATE Estado
+        SET Nombre_Estado = pNombre_Estado,
+            Descripcion_Estado = pDescripcion_Estado
+        WHERE Estado_ID = pEstado_ID;
+
+        DBMS_OUTPUT.PUT_LINE('Estado actualizado correctamente.');
+    END ActualizarEstado;
+
+    PROCEDURE EliminarEstado(
+        pEstado_ID NUMBER
+    ) AS
+    BEGIN
+        DELETE FROM Estado
+        WHERE Estado_ID = pEstado_ID;
+
+        DBMS_OUTPUT.PUT_LINE('Estado eliminado correctamente.');
+    EXCEPTION
+        WHEN OTHERS THEN
+            IF SQLCODE = -2292 THEN
+                RAISE_APPLICATION_ERROR(-20003, 'No se puede eliminar: el estado está en uso.');
+            ELSE
+                RAISE;
+            END IF;
+    END EliminarEstado;
+
+END pkg_estado;
+
+
+
+/*
+BEGIN
+    pkg_estado.InsertarEstado('Activo00', 'Disponible00');
+    pkg_estado.InsertarEstado('Inactivo00', 'No disponible00');
+    pkg_estado.ActualizarEstado(1, 'Activo', 'Disponible para operaciones');
+    pkg_estado.EliminarEstado(2);
+END;
+Error report -
+ORA-00001: unique constraint (HR.SYS_C007453) violated
+ORA-06512: at "HR.PKG_ESTADO", line 17
+ORA-06512: at line 2
+00001. 00000 -  "unique constraint (%s.%s) violated"
+*Cause:    An UPDATE or INSERT statement attempted to insert a duplicate key.
+           For Trusted Oracle configured in DBMS MAC mode, you may see
+           this message if a duplicate entry exists at a different level.
+Action:   Either remove the unique restriction or do not insert the key./
+*/
+--el que no funciona es el de insertar
+BEGIN
+    pkg_estado.EliminarEstado(20);
+END;
 
