@@ -2,7 +2,7 @@
 
 --este paquete esta encargado de gestionar la logica que tienen los procedimientos almacenados con los clientes
 
-
+--pkg_Clientes
 CREATE OR REPLACE PACKAGE pkg_clientes AS
   
     PROCEDURE InsertarCliente(
@@ -170,9 +170,10 @@ BEGIN
     p_EstadoID   => 40
   );
 END;
-
+----------------------------------------------------------------------------------------------------------------------------------------
 
 */
+--pkg_Empleados
 CREATE OR REPLACE PACKAGE pkg_empleados AS
     
     PROCEDURE InsertarEmpleado(
@@ -340,7 +341,9 @@ BEGIN
 END;
 /
 */
+-------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+--pkg_Inventario
 CREATE OR REPLACE PACKAGE pkg_inventario AS
 
   -- Inserta un nuevo item en Inventario (genera Item_ID automáticamente)
@@ -513,6 +516,10 @@ BEGIN
 END;
 /
 */
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+--pkg_Estado
 CREATE OR REPLACE PACKAGE pkg_estado AS
     PROCEDURE InsertarEstado(
         pNombre_Estado       VARCHAR2,
@@ -618,4 +625,515 @@ Action:   Either remove the unique restriction or do not insert the key./
 BEGIN
     pkg_estado.EliminarEstado(20);
 END;
+-----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+
+--pkg_cotzaciones
+    PROCEDURE InsertarEstado(
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    );
+
+    PROCEDURE ActualizarEstado(
+        pEstado_ID           NUMBER,
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    );
+
+    PROCEDURE EliminarEstado(
+        pEstado_ID NUMBER
+    );
+END pkg_estado;
+
+
+CREATE OR REPLACE PACKAGE BODY pkg_estado AS
+
+    PROCEDURE InsertarEstado(
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    ) AS
+        vCount NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO vCount
+        FROM Estado
+        WHERE UPPER(Nombre_Estado) = UPPER(pNombre_Estado);
+
+        IF vCount > 0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'El estado ya existe.');
+        END IF;
+
+        INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado)
+        VALUES (Estado_SEQ.NEXTVAL, pNombre_Estado, pDescripcion_Estado);
+
+        DBMS_OUTPUT.PUT_LINE('Estado insertado correctamente.');
+    END InsertarEstado;
+
+    PROCEDURE ActualizarEstado(
+        pEstado_ID           NUMBER,
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    ) AS
+        vCount NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO vCount
+        FROM Estado
+        WHERE Estado_ID = pEstado_ID;
+
+        IF vCount = 0 THEN
+            RAISE_APPLICATION_ERROR(-20002, 'El estado no existe.');
+        END IF;
+
+        UPDATE Estado
+        SET Nombre_Estado = pNombre_Estado,
+            Descripcion_Estado = pDescripcion_Estado
+        WHERE Estado_ID = pEstado_ID;
+
+        DBMS_OUTPUT.PUT_LINE('Estado actualizado correctamente.');
+    END ActualizarEstado;
+
+    PROCEDURE EliminarEstado(
+        pEstado_ID NUMBER
+    ) AS
+    BEGIN
+        DELETE FROM Estado
+        WHERE Estado_ID = pEstado_ID;
+
+        DBMS_OUTPUT.PUT_LINE('Estado eliminado correctamente.');
+    EXCEPTION
+        WHEN OTHERS THEN
+            IF SQLCODE = -2292 THEN
+                RAISE_APPLICATION_ERROR(-20003, 'No se puede eliminar: el estado está en uso.');
+            ELSE
+                RAISE;
+            END IF;
+    END EliminarEstado;
+
+END pkg_estado;
+
+
+
+/*Error starting at line : 602 in command -
+BEGIN
+    pkg_estado.InsertarEstado('Activo00', 'Disponible00');
+    pkg_estado.InsertarEstado('Inactivo00', 'No disponible00');
+    pkg_estado.ActualizarEstado(1, 'Activo', 'Disponible para operaciones');
+    pkg_estado.EliminarEstado(2);
+END;
+Error report -
+ORA-00001: unique constraint (HR.SYS_C007453) violated
+ORA-06512: at "HR.PKG_ESTADO", line 17
+ORA-06512: at line 2
+00001. 00000 -  "unique constraint (%s.%s) violated"
+*Cause:    An UPDATE or INSERT statement attempted to insert a duplicate key.
+           For Trusted Oracle configured in DBMS MAC mode, you may see
+           this message if a duplicate entry exists at a different level.
+Action:   Either remove the unique restriction or do not insert the key./
+
+BEGIN
+    pkg_estado.EliminarEstado(20);
+END;
+ CREATE OR REPLACE PACKAGE pkg_cotizaciones AS
+    PROCEDURE InsertarCotizacion(
+        pEstadoID NUMBER,
+        pItemID NUMBER,
+        pServicioID NUMBER,
+        pEmpleadoID NUMBER,
+        pFechaServicio DATE
+    );
+
+    PROCEDURE EliminarCotizacion(
+        pCotizacionID NUMBER
+    );
+
+    PROCEDURE ConsultarCotizacionesPorFecha(
+        pFechaInicio DATE,
+        pFechaFin DATE
+    );
+END pkg_cotizaciones;
+/
+CREATE OR REPLACE PACKAGE BODY pkg_cotizaciones AS
+
+    PROCEDURE InsertarCotizacion(
+        pEstadoID NUMBER,
+        pItemID NUMBER,
+        pServicioID NUMBER,
+        pEmpleadoID NUMBER,
+        pFechaServicio DATE
+    ) AS
+        vExisteEmpleado NUMBER;
+        vExisteCliente NUMBER;
+    BEGIN
+        -- Validar si existe el empleado
+        SELECT COUNT(*) INTO vExisteEmpleado
+        FROM Empleados
+        WHERE Empleado_ID = pEmpleadoID;
+
+        IF vExisteEmpleado = 0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'El empleado no existe');
+        END IF;
+
+        -- Validar si el servicio tiene cliente asociado
+        SELECT COUNT(*) INTO vExisteCliente
+        FROM Gestion_Servicios gs
+        JOIN Servicio_Cliente sc ON gs.Servicio_ID = sc.Servicio_ID
+        JOIN Clientes c ON sc.Cliente_ID = c.Cliente_ID
+        WHERE gs.Servicio_ID = pServicioID;
+
+        IF vExisteCliente = 0 THEN
+            RAISE_APPLICATION_ERROR(-20002, 'No hay cliente asociado al servicio');
+        END IF;
+
+        -- Insertar cotización
+        INSERT INTO Cotizaciones (
+            Cotizacion_ID,
+            Estado_ID,
+            Item_ID,
+            Servicio_ID,
+            Empleado_ID,
+            Posible_Fecha_Servicio
+        ) VALUES (
+            Cotizaciones_SEQ.NEXTVAL,
+            pEstadoID,
+            pItemID,
+            pServicioID,
+            pEmpleadoID,
+            pFechaServicio
+        );
+
+        DBMS_OUTPUT.PUT_LINE('Cotización insertada correctamente');
+    END InsertarCotizacion;
+
+    PROCEDURE EliminarCotizacion(
+        pCotizacionID NUMBER
+    ) AS
+    BEGIN
+        DELETE FROM Cotizaciones
+        WHERE Cotizacion_ID = pCotizacionID;
+
+        IF SQL%ROWCOUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('No se encontró la cotización con el ID especificado');
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('Cotización eliminada correctamente');
+        END IF;
+    END EliminarCotizacion;
+
+    PROCEDURE ConsultarCotizacionesPorFecha(
+        pFechaInicio DATE,
+        pFechaFin DATE
+    ) AS
+    BEGIN
+        FOR r IN (
+            SELECT *
+            FROM Vista_Cotizaciones_Detalle
+            WHERE Posible_Fecha_Servicio BETWEEN pFechaInicio AND pFechaFin
+            ORDER BY Posible_Fecha_Servicio
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE(
+                'ID: ' || r.Cotizacion_ID ||
+                ' | Servicio: ' || r.Nombre_Servicio ||
+                ' | Item: ' || r.Nombre_Item ||
+                ' | Técnico: ' || r.Tecnico ||
+                ' | Fecha: ' || TO_CHAR(r.Posible_Fecha_Servicio, 'YYYY-MM-DD')
+            );
+        END LOOP;
+    END ConsultarCotizacionesPorFecha;
+
+END pkg_cotizaciones;
+/
+
+SET SERVEROUTPUT ON;
+
+
+Error starting at line : 736 in command -
+BEGIN
+    pkg_cotizaciones.InsertarCotizacion(
+        pEstadoID       => 1,                    -- Estado (ej: Activo)
+        pItemID         => 78,                  -- ID de inventario
+        pServicioID     => 4,                  -- ID de servicio en Gestion_Servicios
+        pEmpleadoID     => 10,                  -- ID del empleado
+        pFechaServicio  => TO_DATE('2025-08-15', 'YYYY-MM-DD')
+    );
+    DBMS_OUTPUT.PUT_LINE('? Cotización insertada correctamente.');
+END;
+Error report -
+ORA-00001: unique constraint (HR.SYS_C007463) violated
+ORA-06512: at "HR.PKG_COTIZACIONES", line 34
+ORA-06512: at line 2
+00001. 00000 -  "unique constraint (%s.%s) violated"
+*Cause:    An UPDATE or INSERT statement attempted to insert a duplicate key.
+           For Trusted Oracle configured in DBMS MAC mode, you may see
+           this message if a duplicate entry exists at a different level.
+*Action:   Either remove the unique restriction or do not insert the key.
+
+SET SERVEROUTPUT ON;
+
+BEGIN
+    pkg_cotizaciones.ConsultarCotizacionesPorFecha(
+        pFechaInicio => TO_DATE('2025-08-01', 'YYYY-MM-DD'),
+        pFechaFin    => TO_DATE('2025-08-31', 'YYYY-MM-DD')
+    );
+END;
+/
+
+BEGIN
+    pkg_cotizaciones.EliminarCotizacion(
+        pCotizacionID => 10  
+    );
+    DBMS_OUTPUT.PUT_LINE('� Cotización eliminada.');
+END;
+------------------------------------------------------------------------------------------------------------------------------------------------
+
+--pgk_Servicios
+
+CREATE OR REPLACE PACKAGE pkg_estado AS
+    PROCEDURE InsertarEstado(
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    );
+
+    PROCEDURE ActualizarEstado(
+        pEstado_ID           NUMBER,
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    );
+
+    PROCEDURE EliminarEstado(
+        pEstado_ID NUMBER
+    );
+END pkg_estado;
+
+
+CREATE OR REPLACE PACKAGE BODY pkg_estado AS
+
+    PROCEDURE InsertarEstado(
+        pNombre_Estado       VARCHAR2,
+        pDescripcion_Estado  VARCHAR2
+    ) AS
+        vCount NUMBER;
+    BEGIN
+        SELECT COUNT(*) INTO vCount
+        FROM Estado
+        WHERE UPPER(Nombre_Estado) = UPPER(pNombre_Estado);
+
+        IF vCount > 0 THEN
+            RAISE_APPLICATION_ERROR(-20…
+[7:57 p. m., 9/8/2025] Santi🤼🥋: CREATE OR REPLACE PACKAGE pkg_cotizaciones AS
+    PROCEDURE InsertarCotizacion(
+        pEstadoID NUMBER,
+        pItemID NUMBER,
+        pServicioID NUMBER,
+        pEmpleadoID NUMBER,
+        pFechaServicio DATE
+    );
+
+    PROCEDURE EliminarCotizacion(
+        pCotizacionID NUMBER
+    );
+
+    PROCEDURE ConsultarCotizacionesPorFecha(
+        pFechaInicio DATE,
+        pFechaFin DATE
+    );
+END pkg_cotizaciones;
+/
+CREATE OR REPLACE PACKAGE BODY pkg_cotizaciones AS
+
+    PROCEDURE InsertarCotizacion(
+        pEstadoID NUMBER,
+        pItemID NUMBER,
+        pServicioID NUMBER,
+        pEmpleadoID NUMBER,
+        pFechaServicio DATE
+    ) AS
+        vExisteEmpleado NUMBER;
+        vExisteCliente NUMBER;
+    BEGIN
+        -- Validar si existe el empleado
+      …
+[8:19 p. m., 9/8/2025] Santi🤼🥋: CREATE OR REPLACE PACKAGE pkg_servicios AS
+    -- Insertar un nuevo servicio para un cliente
+    PROCEDURE InsertarServicioCliente(
+        pEmpleadoID      NUMBER,
+        pServicioID      NUMBER,
+        pClienteID       NUMBER,
+        pEstadoID        NUMBER,
+        pFecha           DATE,
+        pCantidad        NUMBER,
+        pPrecioTotal     NUMBER
+    );
+
+    -- Actualizar estado de un servicio realizado
+    PROCEDURE ActualizarEstadoServicioRealizado(
+        pServicioRealizado NUMBER,
+        pEstadoID          NUMBER
+    );
+
+    -- Consultar servicios realizados por fecha
+    PROCEDURE ConsultarServiciosRealizadosPorFecha(
+        pFechaInicio DATE,
+        pFechaFin    DATE
+    );
+END pkg_servicios;
+
+
+CREATE OR REPLACE PACKAGE BODY pkg_servicios AS
+
+    PROCEDURE InsertarServicioCliente(
+        pEmpleadoID      NUMBER,
+        pServicioID      NUMBER,
+        pClienteID       NUMBER,
+        pEstadoID        NUMBER,
+        pFecha           DATE,
+        pCantidad        NUMBER,
+        pPrecioTotal     NUMBER
+    ) AS
+        vEmpleadoExiste  NUMBER;
+        vServicioExiste  NUMBER;
+        vClienteExiste   NUMBER;
+    BEGIN
+        -- Validar que el empleado existe
+        SELECT COUNT(*) INTO vEmpleadoExiste
+        FROM Empleados
+        WHERE Empleado_ID = pEmpleadoID;
+
+        IF vEmpleadoExiste = 0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'El empleado no existe.');
+        END IF;
+
+        -- Validar que el servicio existe
+        SELECT COUNT(*) INTO vServicioExiste
+        FROM Gestion_Servicios
+        WHERE Servicio_ID = pServicioID;
+
+        IF vServicioExiste = 0 THEN
+            RAISE_APPLICATION_ERROR(-20002, 'El servicio no existe.');
+        END IF;
+
+        -- Validar que el cliente existe
+        SELECT COUNT(*) INTO vClienteExiste
+        FROM Clientes
+        WHERE Cliente_ID = pClienteID;
+
+        IF vClienteExiste = 0 THEN
+            RAISE_APPLICATION_ERROR(-20003, 'El cliente no existe.');
+        END IF;
+
+        -- Insertar el servicio realizado
+        INSERT INTO Servicio_Cliente (
+            Servicio_Realizado,
+            Empleado_ID,
+            Servicio_ID,
+            Cliente_ID,
+            Estado_ID,
+            Fecha_ID,
+            Cantidad_Servicios,
+            Precio_Total
+        ) VALUES (
+            ServicioCliente_SEQ.NEXTVAL,
+            pEmpleadoID,
+            pServicioID,
+            pClienteID,
+            pEstadoID,
+            pFecha,
+            pCantidad,
+            pPrecioTotal
+        );
+
+        DBMS_OUTPUT.PUT_LINE('Servicio insertado correctamente.');
+    END InsertarServicioCliente;
+
+
+    PROCEDURE ActualizarEstadoServicioRealizado(
+        pServicioRealizado NUMBER,
+        pEstadoID          NUMBER
+    ) AS
+        vExisteServicio NUMBER;
+    BEGIN
+        -- Verificar que el servicio realizado existe
+        SELECT COUNT(*) INTO vExisteServicio
+        FROM Servicio_Cliente
+        WHERE Servicio_Realizado = pServicioRealizado;
+
+        IF vExisteServicio = 0 THEN
+            RAISE_APPLICATION_ERROR(-20004, 'El servicio realizado no existe.');
+        END IF;
+
+        UPDATE Servicio_Cliente
+        SET Estado_ID = pEstadoID
+        WHERE Servicio_Realizado = pServicioRealizado;
+
+        DBMS_OUTPUT.PUT_LINE('Estado del servicio actualizado.');
+    END ActualizarEstadoServicioRealizado;
+
+
+    PROCEDURE ConsultarServiciosRealizadosPorFecha(
+        pFechaInicio DATE,
+        pFechaFin    DATE
+    ) AS
+    BEGIN
+        FOR r IN (
+            SELECT sc.Servicio_Realizado,
+                   gs.Nombre_Servicio,
+                   sc.Fecha_ID,
+                   sc.Precio_Total
+            FROM Servicio_Cliente sc
+            JOIN Gestion_Servicios gs
+              ON sc.Servicio_ID = gs.Servicio_ID
+            WHERE sc.Fecha_ID BETWEEN pFechaInicio AND pFechaFin
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE(
+                'Servicio ID: ' || r.Servicio_Realizado ||
+                ' | Nombre: ' || r.Nombre_Servicio ||
+                ' | Fecha: ' || TO_CHAR(r.Fecha_ID, 'YYYY-MM-DD') ||
+                ' | Precio: ' || r.Precio_Total
+            );
+        END LOOP;
+    END ConsultarServiciosRealizadosPorFecha;
+
+END pkg_servicios;
+/
+
+
+
+
+Error starting at line : 146 in command -
+BEGIN
+    pkg_servicios.InsertarServicioCliente(
+        pEmpleadoID   => 1,  -- Debe existir en EMPLEADOS
+        pServicioID   => 10, -- Debe existir en GESTION_SERVICIOS
+        pClienteID    => 5,  -- Debe existir en CLIENTES
+        pEstadoID     => 1,  -- Debe existir en ESTADO
+        pFecha        => SYSDATE,
+        pCantidad     => 2,
+        pPrecioTotal  => 500000
+    );
+END;
+Error report -
+ORA-00001: unique constraint (HR.SYS_C007471) violated
+ORA-06512: at "HR.PKG_SERVICIOS", line 44
+ORA-06512: at line 2
+00001. 00000 -  "unique constraint (%s.%s) violated"
+*Cause:    An UPDATE or INSERT statement attempted to insert a duplicate key.
+           For Trusted Oracle configured in DBMS MAC mode, you may see
+           this message if a duplicate entry exists at a different level.
+*Action:   Either remove the unique restriction or do not insert the key.
+
+
+
+BEGIN
+    pkg_servicios.ActualizarEstadoServicioRealizado(
+        pServicioRealizado => 10,  -- Debe existir en SERVICIO_CLIENTE
+        pEstadoID          => 2      -- Nuevo estado válido en ESTADO
+    );
+END;
+/
+
+
+
+BEGIN
+    pkg_servicios.ConsultarServiciosRealizadosPorFecha(
+        pFechaInicio => DATE '2025-08-01',
+        pFechaFin    => DATE '2025-08-09'
+    );
+END;
+/
