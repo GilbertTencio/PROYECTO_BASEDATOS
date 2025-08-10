@@ -620,11 +620,11 @@ ORA-06512: at line 2
            For Trusted Oracle configured in DBMS MAC mode, you may see
            this message if a duplicate entry exists at a different level.
 Action:   Either remove the unique restriction or do not insert the key./
-*/
+
 --el que no funciona es el de insertar
 BEGIN
     pkg_estado.EliminarEstado(20);
-END;
+END;*/
 -----------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -732,6 +732,12 @@ Action:   Either remove the unique restriction or do not insert the key./
 BEGIN
     pkg_estado.EliminarEstado(20);
 END;
+*/
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+--pkg_Cotizaciones
  CREATE OR REPLACE PACKAGE pkg_cotizaciones AS
     PROCEDURE InsertarCotizacion(
         pEstadoID NUMBER,
@@ -843,7 +849,7 @@ END pkg_cotizaciones;
 
 SET SERVEROUTPUT ON;
 
-
+/*
 Error starting at line : 736 in command -
 BEGIN
     pkg_cotizaciones.InsertarCotizacion(
@@ -881,7 +887,10 @@ BEGIN
     );
     DBMS_OUTPUT.PUT_LINE('� Cotización eliminada.');
 END;
+*/
 ------------------------------------------------------------------------------------------------------------------------------------------------
+
+
 
 --pgk_Servicios
 
@@ -917,7 +926,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_estado AS
 
         IF vCount > 0 THEN
             RAISE_APPLICATION_ERROR(-20…
-[7:57 p. m., 9/8/2025] Santi🤼🥋: CREATE OR REPLACE PACKAGE pkg_cotizaciones AS
+CREATE OR REPLACE PACKAGE pkg_cotizaciones AS
     PROCEDURE InsertarCotizacion(
         pEstadoID NUMBER,
         pItemID NUMBER,
@@ -950,7 +959,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_cotizaciones AS
     BEGIN
         -- Validar si existe el empleado
       …
-[8:19 p. m., 9/8/2025] Santi🤼🥋: CREATE OR REPLACE PACKAGE pkg_servicios AS
+CREATE OR REPLACE PACKAGE pkg_servicios AS
     -- Insertar un nuevo servicio para un cliente
     PROCEDURE InsertarServicioCliente(
         pEmpleadoID      NUMBER,
@@ -1091,11 +1100,9 @@ CREATE OR REPLACE PACKAGE BODY pkg_servicios AS
     END ConsultarServiciosRealizadosPorFecha;
 
 END pkg_servicios;
-/
 
 
-
-
+/*
 Error starting at line : 146 in command -
 BEGIN
     pkg_servicios.InsertarServicioCliente(
@@ -1136,7 +1143,7 @@ BEGIN
         pFechaFin    => DATE '2025-08-09'
     );
 END;
-/
+*/
 
 
 
@@ -1223,7 +1230,7 @@ CREATE OR REPLACE PACKAGE BODY pkg_seguimiento AS
 
 END pkg_seguimiento;
 
-
+/*
 
 BEGIN
     pkg_seguimiento.InsertarSeguimiento(
@@ -1240,4 +1247,4 @@ BEGIN
         pServicioRealizadoID => 10
     );
 END;
-
+*/
