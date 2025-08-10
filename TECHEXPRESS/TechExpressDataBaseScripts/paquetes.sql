@@ -847,7 +847,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_cotizaciones AS
 END pkg_cotizaciones;
 /
 
-SET SERVEROUTPUT ON;
 
 /*
 Error starting at line : 736 in command -
@@ -891,42 +890,8 @@ END;
 ------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-
---pgk_Servicios
-
-CREATE OR REPLACE PACKAGE pkg_estado AS
-    PROCEDURE InsertarEstado(
-        pNombre_Estado       VARCHAR2,
-        pDescripcion_Estado  VARCHAR2
-    );
-
-    PROCEDURE ActualizarEstado(
-        pEstado_ID           NUMBER,
-        pNombre_Estado       VARCHAR2,
-        pDescripcion_Estado  VARCHAR2
-    );
-
-    PROCEDURE EliminarEstado(
-        pEstado_ID NUMBER
-    );
-END pkg_estado;
-
-
-CREATE OR REPLACE PACKAGE BODY pkg_estado AS
-
-    PROCEDURE InsertarEstado(
-        pNombre_Estado       VARCHAR2,
-        pDescripcion_Estado  VARCHAR2
-    ) AS
-        vCount NUMBER;
-    BEGIN
-        SELECT COUNT(*) INTO vCount
-        FROM Estado
-        WHERE UPPER(Nombre_Estado) = UPPER(pNombre_Estado);
-
-        IF vCount > 0 THEN
-            RAISE_APPLICATION_ERROR(-20…
-CREATE OR REPLACE PACKAGE pkg_cotizaciones AS
+--pkg_Cotizaciones
+  CREATE OR REPLACE PACKAGE pkg_cotizaciones AS
     PROCEDURE InsertarCotizacion(
         pEstadoID NUMBER,
         pItemID NUMBER,
@@ -958,7 +923,86 @@ CREATE OR REPLACE PACKAGE BODY pkg_cotizaciones AS
         vExisteCliente NUMBER;
     BEGIN
         -- Validar si existe el empleado
-      …
+        SELECT COUNT(*) INTO vExisteEmpleado
+        FROM Empleados
+        WHERE Empleado_ID = pEmpleadoID;
+
+        IF vExisteEmpleado = 0 THEN
+            RAISE_APPLICATION_ERROR(-20001, 'El empleado no existe');
+        END IF;
+
+        -- Validar si el servicio tiene cliente asociado
+        SELECT COUNT(*) INTO vExisteCliente
+        FROM Gestion_Servicios gs
+        JOIN Servicio_Cliente sc ON gs.Servicio_ID = sc.Servicio_ID
+        JOIN Clientes c ON sc.Cliente_ID = c.Cliente_ID
+        WHERE gs.Servicio_ID = pServicioID;
+
+        IF vExisteCliente = 0 THEN
+            RAISE_APPLICATION_ERROR(-20002, 'No hay cliente asociado al servicio');
+        END IF;
+
+        -- Insertar cotización
+        INSERT INTO Cotizaciones (
+            Cotizacion_ID,
+            Estado_ID,
+            Item_ID,
+            Servicio_ID,
+            Empleado_ID,
+            Posible_Fecha_Servicio
+        ) VALUES (
+            Cotizaciones_SEQ.NEXTVAL,
+            pEstadoID,
+            pItemID,
+            pServicioID,
+            pEmpleadoID,
+            pFechaServicio
+        );
+
+        DBMS_OUTPUT.PUT_LINE('Cotización insertada correctamente');
+    END InsertarCotizacion;
+
+    PROCEDURE EliminarCotizacion(
+        pCotizacionID NUMBER
+    ) AS
+    BEGIN
+        DELETE FROM Cotizaciones
+        WHERE Cotizacion_ID = pCotizacionID;
+
+        IF SQL%ROWCOUNT = 0 THEN
+            DBMS_OUTPUT.PUT_LINE('No se encontró la cotización con el ID especificado');
+        ELSE
+            DBMS_OUTPUT.PUT_LINE('Cotización eliminada correctamente');
+        END IF;
+    END EliminarCotizacion;
+
+    PROCEDURE ConsultarCotizacionesPorFecha(
+        pFechaInicio DATE,
+        pFechaFin DATE
+    ) AS
+    BEGIN
+        FOR r IN (
+            SELECT *
+            FROM Vista_Cotizaciones_Detalle
+            WHERE Posible_Fecha_Servicio BETWEEN pFechaInicio AND pFechaFin
+            ORDER BY Posible_Fecha_Servicio
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE(
+                'ID: ' || r.Cotizacion_ID ||
+                ' | Servicio: ' || r.Nombre_Servicio ||
+                ' | Item: ' || r.Nombre_Item ||
+                ' | Técnico: ' || r.Tecnico ||
+                ' | Fecha: ' || TO_CHAR(r.Posible_Fecha_Servicio, 'YYYY-MM-DD')
+            );
+        END LOOP;
+    END ConsultarCotizacionesPorFecha;
+
+END pkg_cotizaciones;
+/
+------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+--pkg_Servicios
 CREATE OR REPLACE PACKAGE pkg_servicios AS
     -- Insertar un nuevo servicio para un cliente
     PROCEDURE InsertarServicioCliente(
@@ -1100,53 +1144,10 @@ CREATE OR REPLACE PACKAGE BODY pkg_servicios AS
     END ConsultarServiciosRealizadosPorFecha;
 
 END pkg_servicios;
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-/*
-Error starting at line : 146 in command -
-BEGIN
-    pkg_servicios.InsertarServicioCliente(
-        pEmpleadoID   => 1,  -- Debe existir en EMPLEADOS
-        pServicioID   => 10, -- Debe existir en GESTION_SERVICIOS
-        pClienteID    => 5,  -- Debe existir en CLIENTES
-        pEstadoID     => 1,  -- Debe existir en ESTADO
-        pFecha        => SYSDATE,
-        pCantidad     => 2,
-        pPrecioTotal  => 500000
-    );
-END;
-Error report -
-ORA-00001: unique constraint (HR.SYS_C007471) violated
-ORA-06512: at "HR.PKG_SERVICIOS", line 44
-ORA-06512: at line 2
-00001. 00000 -  "unique constraint (%s.%s) violated"
-*Cause:    An UPDATE or INSERT statement attempted to insert a duplicate key.
-           For Trusted Oracle configured in DBMS MAC mode, you may see
-           this message if a duplicate entry exists at a different level.
-*Action:   Either remove the unique restriction or do not insert the key.
-
-
-
-BEGIN
-    pkg_servicios.ActualizarEstadoServicioRealizado(
-        pServicioRealizado => 10,  -- Debe existir en SERVICIO_CLIENTE
-        pEstadoID          => 2      -- Nuevo estado válido en ESTADO
-    );
-END;
-/
-
-
-
-BEGIN
-    pkg_servicios.ConsultarServiciosRealizadosPorFecha(
-        pFechaInicio => DATE '2025-08-01',
-        pFechaFin    => DATE '2025-08-09'
-    );
-END;
-*/
-
-
-
+--pkg_Seguimiento
 CREATE OR REPLACE PACKAGE pkg_seguimiento AS
     -- Insertar un seguimiento para un servicio realizado
     PROCEDURE InsertarSeguimiento(
@@ -1229,22 +1230,74 @@ CREATE OR REPLACE PACKAGE BODY pkg_seguimiento AS
     END ObtenerSeguimientoPorServicio;
 
 END pkg_seguimiento;
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-/*
-
-BEGIN
-    pkg_seguimiento.InsertarSeguimiento(
-        pServicioRealizadoID => 101,  -- ID de un servicio que ya exista
-        pDescripcion         => 'Revisión final del equipo y entrega al cliente.',
-        pFechaSeguimiento    => SYSDATE
+--pkg_Pagos
+CREATE OR REPLACE PACKAGE pkg_pagos AS
+    -- Registrar un pago nuevo
+    PROCEDURE RegistrarPago(
+        pServicioRealizadoID NUMBER,
+        pEstadoID NUMBER,
+        pPrecioTotal NUMBER,
+        pMetodoPago VARCHAR2
     );
-END;
+
+    -- Consultar pagos completados (vía vista o directo)
+    PROCEDURE ConsultarPagosCompletados;
+
+    -- Consultar pagos realizados en efectivo
+    PROCEDURE ConsultarPagosEfectivo;
+END pkg_pagos;
+
+
+CREATE OR REPLACE PACKAGE BODY pkg_pagos AS
+
+    PROCEDURE RegistrarPago(
+        pServicioRealizadoID NUMBER,
+        pEstadoID NUMBER,
+        pPrecioTotal NUMBER,
+        pMetodoPago VARCHAR2
+    ) AS
+    BEGIN
+        INSERT INTO Pagos (
+            Pago_ID,
+            Servicio_Realizado,
+            Estado_ID,
+            Precio_Total,
+            Metodo_Pago
+        )
+        VALUES (
+            Pagos_SEQ.NEXTVAL,
+            pServicioRealizadoID,
+            pEstadoID,
+            pPrecioTotal,
+            pMetodoPago
+        );
+        DBMS_OUTPUT.PUT_LINE('Pago registrado correctamente.');
+    END RegistrarPago;
+
+    PROCEDURE ConsultarPagosCompletados AS
+    BEGIN
+        FOR rec IN (
+            SELECT Pago_ID, Precio_Total, Metodo_Pago
+            FROM Vista_Pagos_Completados  -- Vista que mencionaste
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('Pago ID: ' || rec.Pago_ID || ', Total: ' || rec.Precio_Total || ', Método: ' || rec.Metodo_Pago);
+        END LOOP;
+    END ConsultarPagosCompletados;
+
+    PROCEDURE ConsultarPagosEfectivo AS
+    BEGIN
+        FOR rec IN (
+            SELECT Pago_ID, Precio_Total
+            FROM VW_PAGOS_EFECTIVO  -- Vista que mencionaste
+        ) LOOP
+            DBMS_OUTPUT.PUT_LINE('Pago ID: ' || rec.Pago_ID || ', Total: ' || rec.Precio_Total);
+        END LOOP;
+    END ConsultarPagosEfectivo;
+
+END pkg_pagos;
 /
+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
-BEGIN
-    pkg_seguimiento.ObtenerSeguimientoPorServicio(
-        pServicioRealizadoID => 10
-    );
-END;
-*/
