@@ -53,8 +53,47 @@ BEGIN
         :NEW.Seguimiento_Siguiente := :NEW.Fecha_Seguimiento + 7;
     END IF;
 END;
+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+create or replace NONEDITIONABLE TRIGGER trg_actualizar_stock_servicio
+AFTER INSERT ON Servicio_Cliente
+FOR EACH ROW
+DECLARE
+    v_item_id NUMBER;
+BEGIN
+    -- Buscar el Item_ID correspondiente al Servicio_ID insertado
+    SELECT Item_ID
+    INTO v_item_id
+    FROM Gestion_Servicios
+    WHERE Servicio_ID = :NEW.Servicio_ID;
+
+    -- Actualizar el stock en Inventario restando la cantidad de servicios
+    UPDATE Inventario
+    SET Cantidad_Item = Cantidad_Item - :NEW.Cantidad_Servicios
+    WHERE Item_ID = v_item_id;
+END;
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+CREATE OR REPLACE TRIGGER trg_evitar_eliminar_cliente_con_servicios
+BEFORE DELETE ON Clientes
+FOR EACH ROW
+DECLARE
+    v_count NUMBER;
+BEGIN
+    -- Contar servicios pendientes o en proceso asociados al cliente
+    SELECT COUNT(*)
+    INTO v_count
+    FROM Servicio_Cliente
+    WHERE Cliente_ID = :OLD.Cliente_ID
+      AND Estado_ID IN (3, 4); -- 1: Pendiente, 2: En proceso (ajustar según tus datos)
+
+    -- Si tiene servicios activos, cancelar la eliminación
+    IF v_count > 0 THEN
+        RAISE_APPLICATION_ERROR(-20003, 'No se puede eliminar el cliente porque tiene servicios activos.');
+    END IF;
+END;
 
 
 
