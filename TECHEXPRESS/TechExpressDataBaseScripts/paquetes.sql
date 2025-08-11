@@ -1,5 +1,5 @@
 --por el momento todos los procedimientos de incertar datos a las tablas estan fallando, cuando se hace un insert a mano funciona, haciendo pruebas a los procedimientos de insertar a las tablas se ve que ninguno funciona 
-
+-- encontre la solucion al problema, si estoy en lo corecto todo funcionará sin ningun problema
 --este paquete esta encargado de gestionar la logica que tienen los procedimientos almacenados con los clientes
 
 --pkg_Clientes
