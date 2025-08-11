@@ -16,7 +16,27 @@ END;
 -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
 
+CREATE OR REPLACE TRIGGER trg_actualizar_estado_servicio_pago
+AFTER INSERT ON Pagos
+FOR EACH ROW
+BEGIN
+    -- Si el pago tiene estado 'Pagado' (13), cambiar estado del servicio a 'Finalizado' (4)
+    IF :NEW.Estado_ID = 13 THEN
+        UPDATE Servicio_Cliente
+        SET Estado_ID = 6
+        WHERE Servicio_Realizado = :NEW.Servicio_Realizado;
+    END IF;
+END;
+/
 
+
+INSERT INTO Pagos (Pago_ID,Servicio_Realizado,Estado_ID, Precio_Total, Metodo_Pago)
+VALUES (4, 12,13, 200.00, '1');
+
+
+SELECT Servicio_Realizado, Estado_ID
+FROM Servicio_Cliente
+WHERE Servicio_Realizado = 12;
 
 
 
