@@ -87,7 +87,7 @@ BEGIN
     INTO v_count
     FROM Servicio_Cliente
     WHERE Cliente_ID = :OLD.Cliente_ID
-      AND Estado_ID IN (3, 4); -- 1: Pendiente, 2: En proceso (ajustar según tus datos)
+      AND Estado_ID IN (3, 4); -- 3: Pendiente, 4: En proceso 
 
     -- Si tiene servicios activos, cancelar la eliminación
     IF v_count > 0 THEN
