@@ -922,7 +922,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_cotizaciones AS
         vExisteEmpleado NUMBER;
         vExisteCliente NUMBER;
     BEGIN
-        -- Validar si existe el empleado
         SELECT COUNT(*) INTO vExisteEmpleado
         FROM Empleados
         WHERE Empleado_ID = pEmpleadoID;
@@ -931,7 +930,6 @@ CREATE OR REPLACE PACKAGE BODY pkg_cotizaciones AS
             RAISE_APPLICATION_ERROR(-20001, 'El empleado no existe');
         END IF;
 
-        -- Validar si el servicio tiene cliente asociado
         SELECT COUNT(*) INTO vExisteCliente
         FROM Gestion_Servicios gs
         JOIN Servicio_Cliente sc ON gs.Servicio_ID = sc.Servicio_ID
