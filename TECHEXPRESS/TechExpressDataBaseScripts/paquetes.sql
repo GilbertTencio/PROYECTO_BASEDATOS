@@ -160,7 +160,7 @@ BEGIN
   );
 END;
 
-EL DE AGREGAR CLIENTE ESTA FALLANDO, INVESTIGARÉ MAS TARDE 
+Ya funciona el insertar cliente
 BEGIN
   pkg_clientes.InsertarCliente(
     p_Nombre     => 'Carlos',
