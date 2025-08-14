@@ -313,17 +313,20 @@ END pkg_empleados;
 
 /*BEGIN
 
-ESTE METODO VUELVE A FALLAR
-    pkg_empleados.InsertarEmpleado(
+
+--YA FUNCIONA
+
+BEGIN 
+pkg_empleados.InsertarEmpleado(
         p_Nombre   => 'Carlos',
         p_Apellido => 'Ramírez',
         p_Email    => 'carlos.ramirez@email.com',
         p_Puesto   => 'Técnico',
         p_Salario  => 350000,
-        p_EstadoID => 101
+        p_EstadoID => 1
     );
 END;
-/
+
 
 BEGIN
     pkg_empleados.ActualizarSalarioEmpleado(
