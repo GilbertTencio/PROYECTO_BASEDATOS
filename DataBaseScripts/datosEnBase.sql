@@ -1,27 +1,26 @@
 ALTER TABLE Estado
 MODIFY (Nombre_Estado VARCHAR2(20));
 
-BEGIN pkg_estado.InsertarEstado('Activo', 'Disponible'); END;
-BEGIN pkg_estado.InsertarEstado('Inactivo', 'No disponible'); END;
-BEGIN pkg_estado.InsertarEstado('Pendiente', 'En espera'); END;
-BEGIN pkg_estado.InsertarEstado('Proceso', 'En proceso'); END;
-BEGIN pkg_estado.InsertarEstado('Cancelado', 'Anulado'); END;
-BEGIN pkg_estado.InsertarEstado('Completado', 'Finalizado'); END;
-BEGIN pkg_estado.InsertarEstado('Vencido', 'Fuera de tiempo'); END;
-BEGIN pkg_estado.InsertarEstado('Programado', 'Con fecha'); END;
-BEGIN pkg_estado.InsertarEstado('Retrasado', 'Fuera de plazo'); END;
-BEGIN pkg_estado.InsertarEstado('Aceptado', 'Aprobado'); END;
-BEGIN pkg_estado.InsertarEstado('Rechazado', 'Denegado'); END;
-BEGIN pkg_estado.InsertarEstado('Facturado', 'Con factura'); END;
-BEGIN pkg_estado.InsertarEstado('Pagado', 'Con pago'); END;
-BEGIN pkg_estado.InsertarEstado('Parcial', 'Pago parcial'); END;
-BEGIN pkg_estado.InsertarEstado('Verificado', 'Chequeado'); END;
-BEGIN pkg_estado.InsertarEstado('Revisión', 'En revisión'); END;
-BEGIN pkg_estado.InsertarEstado('Disponible', 'Listo uso'); END;
-BEGIN pkg_estado.InsertarEstado('Agotado', 'Sin stock'); END;
-BEGIN pkg_estado.InsertarEstado('Reservado', 'Apartado'); END;
-BEGIN pkg_estado.InsertarEstado('Desactivado', 'Fuera de uso'); END;
-
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (1, 'Activo', 'Disponible');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (2, 'Inactivo', 'No disponible');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (3, 'Pendiente', 'En espera');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (4, 'Proceso', 'En proceso');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (5, 'Cancelado', 'Anulado');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (6, 'Completado', 'Finalizado');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (7, 'Vencido', 'Fuera de tiempo');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (8, 'Programado', 'Con fecha');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (9, 'Retrasado', 'Fuera de plazo');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (10, 'Aceptado', 'Aprobado');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (11, 'Rechazado', 'Denegado');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (12, 'Facturado', 'Con factura');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (13, 'Pagado', 'Con pago');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (14, 'Parcial', 'Pago parcial');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (15, 'Verificado', 'Chequeado');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (16, 'Revisión', 'En revisión');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (17, 'Disponible', 'Listo uso');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (18, 'Agotado', 'Sin stock');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (19, 'Reservado', 'Apartado');
+INSERT INTO Estado (Estado_ID, Nombre_Estado, Descripcion_Estado) VALUES (20, 'Desactivado', 'Fuera de uso'); 
 
 
 -- Tabla clientes actualizada
