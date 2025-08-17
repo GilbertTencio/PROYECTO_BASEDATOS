@@ -246,4 +246,22 @@ BEGIN
 END;
 
 
+CURSOR cur_seguimientos AS
+    SELECT Seguimiento_ID,
+           Estado_ID,
+           Servicio_Realizado,
+           Fecha_Seguimiento,
+           Descripcion_Seguimiento,
+           Seguimiento_Siguiente
+    FROM Seguimiento;
+
+
+
+CURSOR cur_pagos AS
+    SELECT Pago_ID,
+           Servicio_Realizado,
+           Estado_ID,
+           Precio_Total,
+           Metodo_Pago
+    FROM Pagos;
 
