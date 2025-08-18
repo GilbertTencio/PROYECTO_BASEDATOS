@@ -43,30 +43,6 @@ END;
 /
 
 -- 4. Registrar Venta
-CREATE OR REPLACE PROCEDURE sp_RegistrarVenta(
-    p_ID_Venta IN INT,
-    p_ID_Cliente IN INT,
-    p_ID_Empleado IN INT,
-    p_Fecha_Venta IN DATE
-) AS
-    v_count NUMBER;
-BEGIN
-    SELECT COUNT(*) INTO v_count
-    FROM Ventas
-    WHERE ID_Venta = p_ID_Venta;
-
-    IF v_count > 0 THEN
-        RAISE_APPLICATION_ERROR(-20001, 'El ID de la venta ya existe');
-    ELSE
-        INSERT INTO Ventas (ID_Venta, ID_Cliente, ID_Empleado, Fecha_Venta, Total)
-        VALUES (p_ID_Venta, p_ID_Cliente, p_ID_Empleado, p_Fecha_Venta, 0);
-    END IF;
-
-    COMMIT;
-END;
-/
-
--- 5. Agregar Detalle Venta
 CREATE OR REPLACE PROCEDURE sp_AgregarDetalleVenta(
     p_ID_Venta IN NUMBER,
     p_ID_Producto IN NUMBER,
@@ -93,9 +69,7 @@ BEGIN
     END IF;
     
     -- 3. Obtener próximo ID_Detalle (secuencial por venta)
-    SELECT NVL(MAX(ID_Detalle), 0) + 1 INTO v_Prox_ID_Detalle
-    FROM Detalles_Venta
-    WHERE ID_Venta = p_ID_Venta;
+    SELECT seq_detalle_venta.NEXTVAL INTO v_Prox_ID_Detalle FROM dual;
     
     -- 4. Insertar el detalle
     INSERT INTO Detalles_Venta (
